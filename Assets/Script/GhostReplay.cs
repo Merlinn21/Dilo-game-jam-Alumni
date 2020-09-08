@@ -6,9 +6,11 @@ public class GhostReplay : MonoBehaviour
 {
     public List<Vector2> saveGhostPosition;
     private List<Vector2> ghostPosition;
+    private List<Vector2> recordGhost;
 
     public Transform spawn;
-    bool startReplay = false;
+    public bool startReplay = false;
+    private bool record = true;
 
     public void StartReplay()
     {
@@ -23,29 +25,33 @@ public class GhostReplay : MonoBehaviour
             if (startReplay)
             {
                 transform.position = ghostPosition[0];
+
+                recordGhost.Add(transform.position);
+                
                 ghostPosition.RemoveAt(0);
             }
-            else
-            {
-                startReplay = false;
-            }
         }
-
-    }
-
-    public void Respawn()
-    {
-        transform.position = spawn.position;
+        else if(ghostPosition.Count == 0)
+        {
+            startReplay = false;
+            ghostPosition = recordGhost;
+            record = false;
+            startReplay = true;
+            
+        }
     }
 
     private void Start()
     {
+        ghostPosition = new List<Vector2>();
+        recordGhost = new List<Vector2>();
         ghostPosition = saveGhostPosition;
     }
 
     public void StartGhost()
     {
         this.gameObject.SetActive(true);
+        StartReplay();
     }
 
     

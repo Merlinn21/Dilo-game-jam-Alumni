@@ -21,9 +21,11 @@ public class GhostPlayer : MonoBehaviour
         //membuat ghost baru
         GhostReplay newGhost = Instantiate(ghost);
         //simpan value?
-        newGhost.saveGhostPosition = recordGhostPositions;
+        foreach (Vector2 x in recordGhostPositions)
+        {
+            newGhost.saveGhostPosition.Add(x);
+        }
         newGhost.StartGhost();    // setActive Ghost    
-        newGhost.StartReplay();   // mulai replay
     }
 
     private void FixedUpdate()
@@ -41,7 +43,7 @@ public class GhostPlayer : MonoBehaviour
     public void StartRecord()
     {
         startRecord = true;
-        //ClearRecord();
+        ClearRecord();
     }
 
     private void ClearRecord()

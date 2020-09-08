@@ -26,6 +26,9 @@ public class Projectile : MonoBehaviour
 
         if (transform.position.x == target.x && transform.position.y == target.y)
             DestroyProjectile();
+
+        if (Vector2.Distance(transform.position,player.position) >= 5)
+            DestroyProjectile();
     }
 
     private void DestroyProjectile()
@@ -48,8 +51,9 @@ public class Projectile : MonoBehaviour
         {
             DestroyProjectile();
             GhostReplay gr = collision.gameObject.GetComponent<GhostReplay>();
-            gr.Respawn();
-            gr.StartReplay();
+            //gr.Respawn();
+            gr.startReplay = true;
         }
     }
+
 }
